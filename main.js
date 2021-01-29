@@ -1,22 +1,40 @@
+/* stores main functions and information */
 window.discordAddons = {
-  auth: localStorage.getItem('auth'),
-  vars: {
+  auth: [localStorage.getItem('auth'), null], /* plugged into array in the event that the object is logged it doesn't reveal token */
+  globalize: function() { /* globalize functions like localStorage and sessionStorage which are removed by discord */
+    console.log("%cDiscord Addons | Globalizing variables...",window.discordAddons.vars.console.passive);
+    try {
+      window.localStorage = window.discordAddons.vars.localStorage;
+      console.log("%cDiscord Addons <Globalize.localStorage>| Success!",window.discordAddons.vars.console.success);
+    }catch(err) {
+      console.log("%cDiscord Addons <Globalize.localStorage> | " + err,window.discordAddons.vars.console.error);
+    }
+    try {
+      window.sessionStorage = window.discordAddons.vars.sessionStorage;
+      console.log("%cDiscord Addons <Globalize.sessionStorage>| Success!",window.discordAddons.vars.console.success);
+    }catch(err) {
+      console.log("%cDiscord Addons <Globalize.sessionStorage> | " + err,window.discordAddons.vars.console.error);
+    }
+  },
+  vars: { /* variables */
     console: {
       passive: "display:block;background:#7777FF;padding:10px;border:3px solid #3333AA;border-radius:5px;color:black;",
       success: "display:block;background:#77FF77;padding:10px;border:3px solid #33AA33;border-radius:5px;color:black;",
       warning: "display:block;background:#FFFF77;padding:10px;border:3px solid #AAAA33;border-radius:5px;color:black;",
       error: "display:block;background:#FF7777;padding:10px;border:3px solid #AA3333;border-radius:5px;color:black;"
     },
-    localStorage: localStorage
+    localStorage: localStorage, /* ;D */
+    sessionStorage: sessionStorage
   }
 }
 
 console.log("%cDiscord Addons | Loaded",window.discordAddons.vars.console.passive);
 
-if(window.discordAddons.auth === null) {
+if(window.discordAddons.auth[0] === null) { /* tells user if authorization is missing */
   console.log("%cDiscord Addons | Authorization code not stored in localStorage! Make sure to set window.discordAddons.vars.localStorage.setItem('auth', 'yourAuthToken')",window.discordAddons.vars.console.error);
 }
 
+/* my custom status */
 (async function() {
   try {
     function getTimeTill() {
@@ -133,7 +151,7 @@ if(window.discordAddons.auth === null) {
       let a = getTimeTill();
       fetch("https://discord.com/api/v8/users/@me/settings", {
         "headers": {
-          "authorization": window.discordAddons.auth,
+          "authorization": window.discordAddons.auth[0],
           "content-type": "application/json",
           "x-super-properties": "eyJvcyI6Ik1hYyBPUyBYIiwiYnJvd3NlciI6IkRpc2NvcmQgQ2xpZW50IiwicmVsZWFzZV9jaGFubmVsIjoic3RhYmxlIiwiY2xpZW50X3ZlcnNpb24iOiIwLjAuMjYxIiwib3NfdmVyc2lvbiI6IjE3LjcuMCIsIm9zX2FyY2giOiJ4NjQiLCJzeXN0ZW1fbG9jYWxlIjoiZW4tVVMiLCJjbGllbnRfYnVpbGRfbnVtYmVyIjo3NTE0NCwiY2xpZW50X2V2ZW50X3NvdXJjZSI6bnVsbH0="
         },
@@ -144,12 +162,13 @@ if(window.discordAddons.auth === null) {
       });
       await new Promise(r=>setTimeout(r,1000));
     }
-    console.log("%cDiscord Addons | Loaded Custom Status", window.discordAddons.vars.console.success);
   }catch(err) {
-    console.log("%cDiscord Addons | " + err, window.discordAddons.vars.console.error);
+    console.log("%cDiscord Addons <Custom Status> | " + err, window.discordAddons.vars.console.error);
   }
 })();
+console.log("%cDiscord Addons | Loaded Custom Status", window.discordAddons.vars.console.success);
 
+/* enabled experiments */
 window.addEventListener("load", e => {
   try {
     const DI = window.DiscordInternals;
@@ -197,6 +216,6 @@ window.addEventListener("load", e => {
     Object.defineProperty(t,"isDeveloper",{get:_=>1,set:_=>_,configurable:true});
     console.log("%cDiscord Addons | Loaded Experiments", window.discordAddons.vars.console.success);
   }catch(err) {
-    console.log("%cDiscord Addons Error | " + err, window.discordAddons.vars.console.error);
+    console.log("%cDiscord Addons <Experiments> | " + err, window.discordAddons.vars.console.error);
   }
 });
