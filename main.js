@@ -43,36 +43,33 @@ if(window.discordAddons.auth[0] === null) { /* tells user if authorization is mi
       let tt = 0;
       let p = "School starts in ", s = "", e = "👎";
 
-      if(["Sun","Mon","Tue","Wed","Thu","Fri"].indexOf(cTime.toString().slice(0, 3)) !== -1) {
-        if(cTime.getHours() > 7) {
-          if(cTime.getHours() < 15) {
-            if(cTime.getHours() === 14 && cTime.getMinutes() >= 42) {
-              p = "";
-              s = "";
-              e = "😏";
-              tt = "School ended!";
-            }else {
-              p = "School ends in ", s = "", e = "👍";
-              tt = (new Date(sTime.slice(0, 15) + " 14:42:00")) - cTime.getTime();
-            }
+      if(["Mon","Tue","Wed","Thu","Fri"].indexOf(cTime.toString().slice(0, 3)) !== -1) {
+        if((cTime.getHours() < 7) || (cTime.getHours() === 7 && cTime.getMinutes() < 55)) {
+          tt = (new Date(sTime.slice(0, sTime.lastIndexOf(" ")) + " 7:55:00")) - cTime.getTime();
+        }else if((cTime.getHours() >= 15) || (cTime.getHours() === 14 && cTime.getMinutes() > 47)) {
+          if(cTime.toString().slice(0, 3) === "Fri") {
+            tt = (new Date(addDay(sTime, 3).slice(0, 15) + " 7:55:00")) - cTime.getTime();
           }else {
-            if(sTime.indexOf("Fri") === -1) {
-              tt = (new Date(addDay(sTime, 1).slice(0, 15) + " 7:55:00")) - cTime.getTime();
-            }else {
-              tt = new Date(calcTillMon().slice(0, 15) + " 7:55:00") - cTime.getTime();
-            }
+            tt = (new Date(addDay(sTime, 1).slice(0, 15) + " 7:55:00")) - cTime.getTime();
           }
-        }else {
-          if(cTime.getHours() === 7 && cTime.getMinutes() > 55) {
-            p = "";
-            e = "😖";
-            tt = "School just started...";
-          }else {
-            tt = (new Date(sTime.slice(0, sTime.lastIndexOf(" ")) + " 7:55:00")) - cTime.getTime();
-          }
+        }else if(cTime.getHours() === 7 && cTime.getMinutes() >= 55) {
+          p = "", s = "", e = "😖", tt = "School just started...";
+        }else if(cTime.getHours() === 14 && cTime.getMinutes() >= 42 && cTime.getMinutes() <= 47) {
+          p = "", s = "", e = "😏", tt = "School ended!";
+        }else if((cTime.getHours() >= 8 && cTime.getHours() <= 14) || (cTime.getHours() === 14 && cTime.getMinutes() < 42)) {
+          p = "School ends in ", s = "", e = "👍";
+          tt = (new Date(sTime.slice(0, 15) + " 14:42:00")) - cTime.getTime();
+        }else if() {
+
         }
       }else {
-        tt = new Date(calcTillMon().slice(0, 15) + " 7:55:00") - cTime.getTime();
+        if(cTime.toString().slice(0, 3) === "Sat") {
+          tt = (new Date(addDay(sTime, 2).slice(0, 15) + " 7:55:00")) - cTime.getTime();
+        }else if(cTime.toString().slice(0, 3) === "Sun") {
+          tt = (new Date(addDay(sTime, 1).slice(0, 15) + " 7:55:00")) - cTime.getTime();
+        }else {
+          console.log("%cDiscord Addons <Custom Status> | new Date() returned an invalid day of the week! new Date().toString().slice(0,3) responds with: " + (new Date().toString().slice(0,3)),window.discordAddons.vars.console.error);
+        }
       }
       return [p + format(tt) + s, e];
     }
@@ -102,7 +99,7 @@ if(window.discordAddons.auth[0] === null) { /* tells user if authorization is mi
       }
     }
     function calcTillMon() {
-      return addDay(strTime, 3 - ["Fri","Sat","Sun"].indexOf(splitDate(strTime)[0]));
+      return addDay(sTime, 3 - ["Fri","Sat","Sun"].indexOf(splitDate(sTime)[0]));
     }
     function format(time) {
       time = time / 1000;
