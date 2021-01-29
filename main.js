@@ -59,8 +59,8 @@ if(window.discordAddons.auth[0] === null) { /* tells user if authorization is mi
         }else if((cTime.getHours() >= 8 && cTime.getHours() <= 14) || (cTime.getHours() === 14 && cTime.getMinutes() < 42)) {
           p = "School ends in ", s = "", e = "👍";
           tt = (new Date(sTime.slice(0, 15) + " 14:42:00")) - cTime.getTime();
-        }else if() {
-
+        }else {
+          console.warn("Time: " + new Date().getTime() + " did not fall into any statements!");
         }
       }else {
         if(cTime.toString().slice(0, 3) === "Sat") {
