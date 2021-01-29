@@ -40,109 +40,109 @@ if(window.discordAddons.auth[0] === null) { /* tells user if authorization is mi
     function getTimeTill() {
       let cTime = new Date();
       let sTime = cTime.toString().split(" GMT")[0];
-      let tt = 0;
-      let p = "School starts in ", s = "", e = "👎";
+      let tt = "";
+      let p = "School starts in ", e = "👎";
 
       if(["Mon","Tue","Wed","Thu","Fri"].indexOf(cTime.toString().slice(0, 3)) !== -1) {
         if((cTime.getHours() < 7) || (cTime.getHours() === 7 && cTime.getMinutes() < 55)) {
-          tt = (new Date(sTime.slice(0, sTime.lastIndexOf(" ")) + " 7:55:00")) - cTime.getTime();
+          tt = format((new Date(sTime.slice(0, sTime.lastIndexOf(" ")) + " 7:55:00")) - cTime.getTime());
         }else if((cTime.getHours() >= 15) || (cTime.getHours() === 14 && cTime.getMinutes() > 47)) {
           if(cTime.toString().slice(0, 3) === "Fri") {
-            tt = (new Date(addDay(sTime, 3).slice(0, 15) + " 7:55:00")) - cTime.getTime();
+            tt = format((new Date(addDay(sTime, 3).slice(0, 15) + " 7:55:00")) - cTime.getTime());
           }else {
-            tt = (new Date(addDay(sTime, 1).slice(0, 15) + " 7:55:00")) - cTime.getTime();
+            tt = format((new Date(addDay(sTime, 1).slice(0, 15) + " 7:55:00")) - cTime.getTime());
           }
         }else if(cTime.getHours() === 7 && cTime.getMinutes() >= 55) {
-          p = "", s = "", e = "😖", tt = "School just started...";
+          p = "", e = "😖", tt = "School just started...";
         }else if(cTime.getHours() === 14 && cTime.getMinutes() >= 42 && cTime.getMinutes() <= 47) {
-          p = "", s = "", e = "😏", tt = "School ended!";
+          p = "", e = "😏", tt = "School ended!";
         }else if((cTime.getHours() >= 8 && cTime.getHours() <= 14) || (cTime.getHours() === 14 && cTime.getMinutes() < 42)) {
-          p = "School ends in ", s = "", e = "👍";
-          tt = (new Date(sTime.slice(0, 15) + " 14:42:00")) - cTime.getTime();
+          p = "School ends in ", e = "👍";
+          tt = format((new Date(sTime.slice(0, 15) + " 14:42:00")) - cTime.getTime());
         }else {
-          console.warn("Time: " + new Date().getTime() + " did not fall into any statements!");
+          console.log("%cDiscord Addons <Custom Status> | Time: " + new Date().getTime() + ", did not get evaluated!",window.discordAddons.vars.console.error);
         }
       }else {
         if(cTime.toString().slice(0, 3) === "Sat") {
-          tt = (new Date(addDay(sTime, 2).slice(0, 15) + " 7:55:00")) - cTime.getTime();
+          tt = format((new Date(addDay(sTime, 2).slice(0, 15) + " 7:55:00")) - cTime.getTime());
         }else if(cTime.toString().slice(0, 3) === "Sun") {
-          tt = (new Date(addDay(sTime, 1).slice(0, 15) + " 7:55:00")) - cTime.getTime();
+          tt = format((new Date(addDay(sTime, 1).slice(0, 15) + " 7:55:00")) - cTime.getTime());
         }else {
           console.log("%cDiscord Addons <Custom Status> | new Date() returned an invalid day of the week! new Date().toString().slice(0,3) responds with: " + (new Date().toString().slice(0,3)),window.discordAddons.vars.console.error);
         }
       }
-      return [p + format(tt) + s, e];
-    }
-    function buildDate(s) {
-      return `${s[0]} ${s[1]} ${s[2]} ${s[3]} ${s[4][0]}:${s[4][1]}:${s[4][2]}`;
-    }
-    function splitDate(str) {
-      let s = str.split(" ");
-      let i = s[4].split(":");
-      return [s[0], s[1], parseInt(s[2]), parseInt(s[3]), [parseInt(i[0]), parseInt(i[1]), parseInt(i[2])]];
-    }
-    function addDay(a, t) {
-      s = a;
-      if(typeof a === "string") {
-        s = splitDate(a);
+      function buildDate(s) {
+        return `${s[0]} ${s[1]} ${s[2]} ${s[3]} ${s[4][0]}:${s[4][1]}:${s[4][2]}`;
       }
-      let mo = ["Jan", "Feb", "Mar", "Apr", "May"], mv = [31, 28, 31, 30, 31], newDay = s[2] + t, newMon = s[1];
-      if(newDay > mv[mo.indexOf(s[1])]) {
-        newDay = t - (mv[mo.indexOf(s[1])] - s[2]);
-        newMon = mo[mo.indexOf(newMon) + 1];
+      function splitDate(str) {
+        let s = str.split(" ");
+        let i = s[4].split(":");
+        return [s[0], s[1], parseInt(s[2]), parseInt(s[3]), [parseInt(i[0]), parseInt(i[1]), parseInt(i[2])]];
       }
-      s[1] = newMon, s[2] = newDay;
-      if(typeof a === "string") {
-        return buildDate(s);
-      }else {
-        return s;
+      function addDay(a, t) {
+        s = a;
+        if(typeof a === "string") {
+          s = splitDate(a);
+        }
+        let mo = ["Jan", "Feb", "Mar", "Apr", "May"], mv = [31, 28, 31, 30, 31], newDay = s[2] + t, newMon = s[1];
+        if(newDay > mv[mo.indexOf(s[1])]) {
+          newDay = t - (mv[mo.indexOf(s[1])] - s[2]);
+          newMon = mo[mo.indexOf(newMon) + 1];
+        }
+        s[1] = newMon, s[2] = newDay;
+        if(typeof a === "string") {
+          return buildDate(s);
+        }else {
+          return s;
+        }
       }
-    }
-    function calcTillMon() {
-      return addDay(sTime, 3 - ["Fri","Sat","Sun"].indexOf(splitDate(sTime)[0]));
-    }
-    function format(time) {
-      time = time / 1000;
+      function calcTillMon() {
+        return addDay(sTime, 3 - ["Fri","Sat","Sun"].indexOf(splitDate(sTime)[0]));
+      }
+      function format(time) {
+        time = time / 1000;
 
-      let days = Math.floor(time / 86400);
-      time -= days * 86400;
-      days = days.toString();
-      if(days.length === 1) {
-        days = "0" + days;
-      }
+        let days = Math.floor(time / 86400);
+        time -= days * 86400;
+        days = days.toString();
+        if(days.length === 1) {
+          days = "0" + days;
+        }
 
-      let hours = Math.floor(time / 3600);
-      time -= hours * 3600;
-      hours = hours.toString();
-      if(hours.length === 1) {
-        hours = "0" + hours;
-      }
+        let hours = Math.floor(time / 3600);
+        time -= hours * 3600;
+        hours = hours.toString();
+        if(hours.length === 1) {
+          hours = "0" + hours;
+        }
 
-      let minutes = Math.floor(time / 60);
-      time -= minutes * 60;
-      minutes = minutes.toString();
-      if(minutes.length === 1) {
-        minutes = "0" + minutes;
-      }
+        let minutes = Math.floor(time / 60);
+        time -= minutes * 60;
+        minutes = minutes.toString();
+        if(minutes.length === 1) {
+          minutes = "0" + minutes;
+        }
 
-      let seconds = Math.floor(time);
-      seconds = seconds.toString();
-      if(seconds.length === 1) {
-        seconds = "0" + seconds;
-      }
-      if(parseInt(days) === 0) {
-        if(parseInt(hours) === 0) {
-          if(parseInt(minutes) === 0) {
-            return parseInt(seconds);
+        let seconds = Math.floor(time);
+        seconds = seconds.toString();
+        if(seconds.length === 1) {
+          seconds = "0" + seconds;
+        }
+        if(parseInt(days) === 0) {
+          if(parseInt(hours) === 0) {
+            if(parseInt(minutes) === 0) {
+              return parseInt(seconds);
+            }else {
+              return `${minutes}:${seconds}`;
+            }
           }else {
-            return `${minutes}:${seconds}`;
+            return `${hours}:${minutes}:${seconds}`;
           }
         }else {
-          return `${hours}:${minutes}:${seconds}`;
+          return `${days}:${hours}:${minutes}:${seconds}`;
         }
-      }else {
-        return `${days}:${hours}:${minutes}:${seconds}`;
       }
+      return [p + tt, e];
     }
     while(true){
       let a = getTimeTill();
