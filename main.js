@@ -1,6 +1,3 @@
-console.log("%cDiscord Addons | Loaded",window.discordAddons.vars.console.passive);
-
-
 window.discordAddons = {
   auth: localStorage.getItem('auth'),
   vars: {
@@ -13,6 +10,8 @@ window.discordAddons = {
     localStorage: localStorage
   }
 }
+
+console.log("%cDiscord Addons | Loaded",window.discordAddons.vars.console.passive);
 
 if(window.discordAddons.auth === null) {
   console.log("%cDiscord Addons | Authorization code not stored in localStorage! Make sure to set window.discordAddons.vars.localStorage.setItem('auth', 'yourAuthToken')",window.discordAddons.vars.console.error);
