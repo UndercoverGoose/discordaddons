@@ -121,7 +121,7 @@ window.discordAddons = {
         document.head.appendChild(style);
       },
       createTitle: function(a) {
-        this.elements.titles[a] = create("h2", {class:"colorStandard-2KCXvj size14-e6ZScH h2-2gWE-o title-3sZWYQ defaultColor-1_ajX0 defaultMarginh2-2LTaUL"});
+        this.elements.titles[a] = this.create("h2", {class:"colorStandard-2KCXvj size14-e6ZScH h2-2gWE-o title-3sZWYQ defaultColor-1_ajX0 defaultMarginh2-2LTaUL"});
         this.elements.titles[a].textContent = a;
         this.elements.menu.appendChild(this.elements.titles[a]);
       },
