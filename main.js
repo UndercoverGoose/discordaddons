@@ -129,13 +129,13 @@ window.discordAddons = {
         this.elements.menu.appendChild(this.elements.titles[a]);
       },
       createRatio: function(a, b, c) {
-        let d1 = create("div", {class:"item-26Dhrx marginBottom8-AtZOdT horizontal-2EEEnY flex-1O1GKY directionRow-3v3tfG",role:"radio","aria-checked":"false",tabindex:"-1"});
-        let d2 = create("div", {class:"radioBar-bMNUI-",style:`--radio-bar-accent-color:#${c}; padding: 10px;`});
+        let d1 = this.create("div", {class:"item-26Dhrx marginBottom8-AtZOdT horizontal-2EEEnY flex-1O1GKY directionRow-3v3tfG",role:"radio","aria-checked":"false",tabindex:"-1"});
+        let d2 = this.create("div", {class:"radioBar-bMNUI-",style:`--radio-bar-accent-color:#${c}; padding: 10px;`});
         d2.innerHTML = `<svg aria-hidden="false" width="24" height="24" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="currentColor"></path></svg>`;
-        let d3 = create("div", {class:"info-3LOr12"});
-        let d4 = create("div", {class:"size16-1P40sf title-3BE6m5"});
+        let d3 = this.create("div", {class:"info-3LOr12"});
+        let d4 = this.create("div", {class:"size16-1P40sf title-3BE6m5"});
         d4.textContent = a;
-        let d5 = create("div", {class:"size14-e6ZScH"});
+        let d5 = this.create("div", {class:"size14-e6ZScH"});
         d5.textContent = b;
 
         d3.appendChild(d4); d3.appendChild(d5);
