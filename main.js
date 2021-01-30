@@ -24,7 +24,10 @@ window.discordAddons = {
       error: "display:block;background:#FF7777;padding:10px;border:3px solid #AA3333;border-radius:5px;color:black;"
     },
     settings: {
-      elements: {},
+      elements: {
+        titles: {},
+        ratios: {}
+      },
       get: function(a) {
         return document.getElementsByClassName(a);
       },
