@@ -290,7 +290,7 @@ console.log("%cDiscord Addons | Loaded Custom Status", window.discordAddons.vars
 
 window.addEventListener("load", e => {
   /* enable custom menu*/
-  menuActivator();
+  window.discordAddons.vars.settings.menuActivator();
 
   /* enabled experiments */
   try {
