@@ -119,9 +119,9 @@ window.discordAddons = {
         document.body.appendChild(this.elements.menu);
       },
       createStyle: function() {
-        this.elements.style = this.create("style");
+        this.elements.style = this.create("style",{});
         this.elements.style.textContent = "@keyframes DABtn {0% {color: gold;}50% {color: yellow;}100% {color: gold;}} @keyframes DAExperiment {0% {color: #ff3300;}50% {color: red;}100% {color: #ff3300;}}";
-        document.head.appendChild(style);
+        document.head.appendChild(this.elements.style);
       },
       createTitle: function(a) {
         this.elements.titles[a] = this.create("h2", {class:"colorStandard-2KCXvj size14-e6ZScH h2-2gWE-o title-3sZWYQ defaultColor-1_ajX0 defaultMarginh2-2LTaUL"});
@@ -139,12 +139,14 @@ window.discordAddons = {
         d5.textContent = b;
 
         d3.appendChild(d4); d3.appendChild(d5);
-        this.elements.ratios[a] = d1.appendChild(d2.appendChild(d3));
+        d2.appendChild(d3);
+        d1.appendChild(d2);
+        this.elements.ratios[a] = d1;
         this.elements.menu.appendChild(this.elements.ratios[a]);
       },
       menuResize: function() {
-        this.elements.menu.style.left = (document.getElementsByClassName("sidebarRegionScroller-3MXcoP thin-1ybCId scrollerBase-289Jih fade-2kXiP2")[0].offsetWidth + 40) + "px";
-        this.elements.menu.style.width = `calc(100vw - ${document.getElementsByClassName("sidebarRegionScroller-3MXcoP thin-1ybCId scrollerBase-289Jih fade-2kXiP2")[0].offsetWidth + 140}px)`;
+        discordAddons.vars.settings.elements.menu.style.left = (document.getElementsByClassName("sidebarRegionScroller-3MXcoP thin-1ybCId scrollerBase-289Jih fade-2kXiP2")[0].offsetWidth + 40) + "px";
+        discordAddons.vars.settings.elements.menu.style.width = `calc(100vw - ${document.getElementsByClassName("sidebarRegionScroller-3MXcoP thin-1ybCId scrollerBase-289Jih fade-2kXiP2")[0].offsetWidth + 140}px)`;
       },
       created: false,
       inView: false
