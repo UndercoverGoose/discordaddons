@@ -23,7 +23,130 @@ window.discordAddons = {
       warning: "display:block;background:#FFFF77;padding:10px;border:3px solid #AAAA33;border-radius:5px;color:black;",
       error: "display:block;background:#FF7777;padding:10px;border:3px solid #AA3333;border-radius:5px;color:black;"
     },
-    localStorage: localStorage, /* ;D */
+    settings: {
+      elements: {},
+      get: function(a) {
+        return document.getElementsByClassName(a);
+      },
+      menuActivator: function() {
+        _this = this;
+        function w() {
+          let a = _this.get("button-14-BFJ enabled-2cQ-u7 button-38aScr lookBlank-3eh9lL colorBrand-3pXr91 grow-q77ONN");
+          if(a[0] !== undefined) {
+            clearInterval(w_i);
+            for(let i=0;i<a.length;i++) {
+              if(a[i].getAttribute("aria-label") === "User Settings") {
+                a[i].addEventListener("click", e => {
+                  if(!_this.created) {
+                    _this.createMenu();
+                  }
+                  _this.generateBtn();
+                });
+              }
+            }
+          }
+        }
+        let w_i = setInterval(w, 0);
+      },
+      generateBtn: function() {
+        _this = this;
+        function w() {
+          if(_this.get("side-8zPYf6")[0] !== undefined) {
+            clearInterval(w_i);
+
+            _this.get("closeButton-1tv5uR")[0].addEventListener("click", e => {
+              _this.elements.menu.style.display = "none";
+              _this.inView = false;
+            });
+
+            let pBtns = _this.get("item-PXvHYJ");
+            for(let i=0;i<pBtns.length;i++) {
+              pBtns[i].addEventListener("click", e => {
+                _this.elements.menu.style.display = "none";
+                _this.elements.menu.className = "item-PXvHYJ themed-OHr7kt";
+                e.target.className = "item-PXvHYJ selected-3s45Ha themed-OHr7kt";
+
+                _this.inView = false;
+              });
+            }
+            create();
+          }
+        }
+        let w_i = setInterval(w, 0);
+
+        function create() {
+          let btn = _this.create("div", {class:"item-PXvHYJ themed-OHr7kt",style:"animation-name:DABtn;animation-duration:1s;animation-iteration-count:infinite"});
+          btn.textContent = "Discord Addons";
+
+          btn.addEventListener("click", e => {
+            _this.get("selected-3s45Ha")[0].className = "item-PXvHYJ themed-OHr7kt";
+            _this.elements.menu.className = "item-PXvHYJ selected-3s45Ha themed-OHr7kt";
+            _this.elements.menu.style.display = null;
+
+            _this.inView = true;
+          });
+
+          _this.get("side-8zPYf6")[0].insertBefore(btn, _this.get("side-8zPYf6")[0].children[5]);
+        }
+      },
+      create: function(e, t) {
+        let a = document.createElement(e);
+        let c = Object.keys(t);
+        for(let i=0;i<c.length;i++) {
+          a.setAttribute(c[i], t[c[i]]);
+        }
+        return a;
+      },
+      createMenu: function() {
+        this.elements.menu = this.create("div", {id:"addonMenu",style:"z-index:9999999;position:fixed;left:266px;top:0px;min-width:406px;width:calc(100vw - 376px);max-width:670px;height:100vh;display:none;padding-top:60px;background:#36393f"})
+        this.createTitle("Custom Status");
+
+        this.createTitle("Custom Status");
+        this.createRatio("School Countdown","Countdowns until school starts and ends","43b581");
+        this.createRatio("Uptime","Counts up infinitely","43b581");
+
+        this.createTitle(" ");
+        this.createTitle("HypeSquad Status");
+        this.createRatio("Bravery",undefined,"835dc4");
+        this.createRatio("Brilliance",undefined,"ff6d57");
+        this.createRatio("Balance",undefined,"00e5c3");
+
+        window.onresize = this.menuResize;
+
+        document.body.appendChild(this.elements.menu);
+      },
+      createStyle: function() {
+        this.elements.style = this.create("style");
+        this.elements.style.textContent = "@keyframes DABtn {0% {color: gold;}50% {color: yellow;}100% {color: gold;}} @keyframes DAExperiment {0% {color: #ff3300;}50% {color: red;}100% {color: #ff3300;}}";
+        document.head.appendChild(style);
+      },
+      createTitle: function(a) {
+        this.elements.titles[a] = create("h2", {class:"colorStandard-2KCXvj size14-e6ZScH h2-2gWE-o title-3sZWYQ defaultColor-1_ajX0 defaultMarginh2-2LTaUL"});
+        this.elements.titles[a].textContent = a;
+        this.elements.menu.appendChild(this.elements.titles[a]);
+      },
+      createRatio: function(a, b, c) {
+        let d1 = create("div", {class:"item-26Dhrx marginBottom8-AtZOdT horizontal-2EEEnY flex-1O1GKY directionRow-3v3tfG",role:"radio","aria-checked":"false",tabindex:"-1"});
+        let d2 = create("div", {class:"radioBar-bMNUI-",style:`--radio-bar-accent-color:#${c}; padding: 10px;`});
+        d2.innerHTML = `<svg aria-hidden="false" width="24" height="24" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="currentColor"></path></svg>`;
+        let d3 = create("div", {class:"info-3LOr12"});
+        let d4 = create("div", {class:"size16-1P40sf title-3BE6m5"});
+        d4.textContent = a;
+        let d5 = create("div", {class:"size14-e6ZScH"});
+        d5.textContent = b;
+
+        d3.appendChild(d4); d3.appendChild(d5);
+        this.elements.ratios[a] = d1.appendChild(d2.appendChild(d3));
+        this.elements.menu.appendChild(this.elements.ratios[a]);
+      },
+      menuResize: function() {
+        this.elements.menu.style.left = (document.getElementsByClassName("sidebarRegionScroller-3MXcoP thin-1ybCId scrollerBase-289Jih fade-2kXiP2")[0].offsetWidth + 40) + "px";
+        this.elements.menu.style.width = `calc(100vw - ${document.getElementsByClassName("sidebarRegionScroller-3MXcoP thin-1ybCId scrollerBase-289Jih fade-2kXiP2")[0].offsetWidth + 140}px)`;
+      },
+      created: false,
+      inView: false
+    },
+    localStorage: localStorage,
     sessionStorage: sessionStorage
   }
 }
@@ -165,8 +288,11 @@ if(window.discordAddons.auth[0] === null) { /* tells user if authorization is mi
 })();
 console.log("%cDiscord Addons | Loaded Custom Status", window.discordAddons.vars.console.success);
 
-/* enabled experiments */
 window.addEventListener("load", e => {
+  /* enable custom menu*/
+  menuActivator();
+
+  /* enabled experiments */
   try {
     const DI = window.DiscordInternals;
     const hasLib = !!(DI && DI.versionCompare && DI.versionCompare(DI.version || "", "1.9") >= 0);
