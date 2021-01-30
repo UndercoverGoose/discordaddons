@@ -18,10 +18,10 @@ window.discordAddons = {
   },
   vars: { /* variables */
     console: {
-      passive: "display:block;background:#7777FF;padding:10px;border:3px solid #3333AA;border-radius:5px;color:black;",
-      success: "display:block;background:#77FF77;padding:10px;border:3px solid #33AA33;border-radius:5px;color:black;",
-      warning: "display:block;background:#FFFF77;padding:10px;border:3px solid #AAAA33;border-radius:5px;color:black;",
-      error: "display:block;background:#FF7777;padding:10px;border:3px solid #AA3333;border-radius:5px;color:black;"
+      passive: "display:block;background:#2f3137;padding:10px;border:none;border-left:3px solid #835dc4;border-radius:2.5px;color:#b9bbbe;margin:10px 0px 10px 0px",
+      success: "display:block;background:#2f3137;padding:10px;border:none;border-left:3px solid #43b581;border-radius:2.5px;color:#b9bbbe;margin:10px 0px 10px 0px",
+      warning: "display:block;background:#2f3137;padding:10px;border:none;border-left:3px solid #fff957;border-radius:2.5px;color:#b9bbbe;margin:10px 0px 10px 0px",
+      error: "display:block;background:#2f3137;padding:10px;border:none;border-left:3px solid #ff6d57;border-radius:2.5px;color:#b9bbbe;margin:10px 0px 10px 0px"
     },
     settings: {
       elements: {
@@ -102,7 +102,7 @@ window.discordAddons = {
       },
       createMenu: function() {
         this.elements.menu = this.create("div", {id:"addonMenu",style:"z-index:9999999;position:fixed;left:266px;top:0px;min-width:406px;width:calc(100vw - 376px);max-width:670px;height:100vh;display:none;padding-top:60px;background:#36393f"})
-        this.createTitle("Custom Status");
+        this.createStyle();
 
         this.createTitle("Custom Status");
         this.createRatio("School Countdown","Countdowns until school starts and ends","43b581");
@@ -156,7 +156,7 @@ window.discordAddons = {
   }
 }
 
-console.log("%cDiscord Addons | Loaded",window.discordAddons.vars.console.passive);
+console.log("%cDiscord Addons v1.1 | Loaded",window.discordAddons.vars.console.passive);
 
 if(window.discordAddons.auth[0] === null) { /* tells user if authorization is missing */
   console.log("%cDiscord Addons | Authorization code not stored in localStorage! Make sure to set window.discordAddons.vars.localStorage.setItem('auth', 'yourAuthToken')",window.discordAddons.vars.console.error);
